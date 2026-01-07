@@ -11,16 +11,9 @@
     </header>
 
     <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Terraform (Google Cloud-focused)</h1>
-                <p>Practical Terraform examples for provisioning and managing Google Cloud networking resources, from core concepts to HA VPN setups.</p>
-            </div>
-        </section>
-
-        <section class="command-section">
-            <div id="command-container"></div>
-        </section>
+        <a href="index.html">Back to Home</a>
+        <h1>Terraform (GCP) Commands</h1>
+        <div id="command-container"></div>
     </main>
 
     <footer>
@@ -61,7 +54,7 @@
                                     <h4><code>${command.command}</code></h4>
                                     <p><strong>Syntax:</strong>
                                         <button onclick="copyToClipboard(\
-                                            ${command.syntax.replace(/`/g, '\`')}
+                                            `${command.syntax.replace(/`/g, '\\`')}`
                                         )">Copy</button>
                                     </p>
                                     <pre><code>${command.syntax}</code></pre>
@@ -69,13 +62,13 @@
                                     <p><strong>Why:</strong> ${command.why}</p>
                                     <p><strong>When:</strong> ${command.when}</p>
                                     <p><strong>Example:</strong>
-                                        <button onclick="copyToClipboard(\
-                                            ${command.example.replace(/`/g, '\`')}
-                                        )">Copy</button>
+                                        <button onclick="copyToClipboard(\`${command.example.replace(/`/g, '\\`')}\`)">Copy</button>
                                     </p>
                                     <pre><code>${command.example}</code></pre>
+                                    
                                     ${command.version ? `<p><strong>Version:</strong> ${command.version}</p>` : ''}
-                                `;
+                                
+`;
                                 container.appendChild(commandElement);
                             });
                         });
