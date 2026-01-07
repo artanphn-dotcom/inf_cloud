@@ -44,7 +44,7 @@ main {
     margin: 0 auto;
 }
 
-/* Card Section */
+/* Card Section (index.html) */
 .card-section {
     padding: 3rem 1rem;
 }
@@ -109,27 +109,61 @@ main {
     color: #0056b3;
 }
 
-/* Command Page Styles */
+/* Command Section (Technology Pages) */
+.command-section {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+}
+
+#command-container h2 {
+    font-size: 2rem;
+    color: #e06c75;
+    border-bottom: 2px solid #61afef;
+    padding-bottom: 0.5rem;
+    margin-top: 3rem;
+}
+
+#command-container h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 2rem;
+}
+
 .command {
     background-color: #fff;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #61afef;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.command h4 {
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+
 pre {
-    background-color: #eee;
+    background-color: #f0f0f0;
     padding: 1rem;
     border-radius: 5px;
     overflow-x: auto;
     transition: background-color 0.3s ease;
+    border: 1px solid #ddd;
 }
 
 code {
     font-family: 'SF Mono', 'Courier New', Courier, monospace;
+}
+
+.command p {
+    line-height: 1.7;
+}
+
+.command p strong {
+    color: #333;
 }
 
 .command p strong + button {
@@ -172,7 +206,9 @@ body.dark-mode .card {
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-body.dark-mode .card-header h2 {
+body.dark-mode .card-header h2,
+body.dark-mode #command-container h3,
+body.dark-mode .command p strong {
     color: #c5c5c5;
 }
 
@@ -184,14 +220,20 @@ body.dark-mode .card-footer a:hover {
     color: #528bff;
 }
 
+body.dark-mode #command-container h2 {
+    color: #e06c75;
+    border-bottom-color: #61afef;
+}
+
 body.dark-mode .command {
     background-color: #252525;
-    border-color: #333;
+    border-color: #61afef;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 body.dark-mode pre {
     background-color: #1a1a1a;
+    border-color: #333;
 }
 
 body.dark-mode .command p strong + button {
@@ -215,8 +257,10 @@ header nav {
     justify-content: space-between;
     align-items: center;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 1rem;
+}
+
+body.dark-mode header nav {
+    border-bottom: 1px solid #333;
 }
 
 header nav a {
