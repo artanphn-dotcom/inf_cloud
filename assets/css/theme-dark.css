@@ -1,0 +1,41 @@
+body {
+    background-color: #282c34;
+    color: #abb2bf;
+}
+
+header, footer {
+    background-color: #21252b;
+    color: #e06c75; /* A subtle reddish tone for accents */
+}
+
+.card {
+    background-color: #3e4451;
+    border: 1px solid #5c6370;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.card a {
+    color: #61afef; /* A blueish tone for links */
+}
+
+.command {
+    background-color: #3e4451;
+    border: 1px solid #5c6370;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+pre {
+    background-color: #21252b;
+}
+
+.command p strong + button {
+    background-color: #61afef;
+}
+
+.command p strong + button:hover {
+    background-color: #528bff;
+}
+
+.command p strong + button:active {
+    background-color: #467bd8;
+}

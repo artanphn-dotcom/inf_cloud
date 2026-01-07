@@ -1,0 +1,75 @@
+<head>
+    <base href="../">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terraform (GCP) - Knowledge Portal</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+    <header>
+        <!-- Header content will be loaded here -->
+    </header>
+
+    <main>
+        <a href="index.html">Back to Home</a>
+        <h1>Terraform (GCP) Commands</h1>
+        <div id="command-container"></div>
+    </main>
+
+    <footer>
+        <!-- Footer content will be loaded here -->
+    </footer>
+
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/search.js"></script>
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Optional: Provide visual feedback to the user
+                console.log('Async: Copying to clipboard was successful!');
+            }, function(err) {
+                console.error('Async: Could not copy text: ', err);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('data/terraform.json')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('command-container');
+                    data.categories.forEach(category => {
+                        const categoryElement = document.createElement('div');
+                        categoryElement.innerHTML = `<h2>${category.name}</h2>`;
+                        container.appendChild(categoryElement);
+
+                        category.subcategories.forEach(subcategory => {
+                            const subcategoryElement = document.createElement('div');
+                            subcategoryElement.innerHTML = `<h3>${subcategory.name}</h3>`;
+                            container.appendChild(subcategoryElement);
+
+                            subcategory.commands.forEach(command => {
+                                const commandElement = document.createElement('div');
+                                commandElement.classList.add('command');
+                                commandElement.innerHTML = `
+                                    <h4><code>${command.command}</code></h4>
+                                    <p><strong>Syntax:</strong>
+                                        <button onclick="copyToClipboard(\`${command.syntax.replace(/`/g, '\\`')}\`)">Copy</button>
+                                    </p>
+                                    <pre><code>${command.syntax}</code></pre>
+                                    <p><strong>Description:</strong> ${command.description}</p>
+                                    <p><strong>Why:</strong> ${command.why}</p>
+                                    <p><strong>When:</strong> ${command.when}</p>
+                                    <p><strong>Example:</strong>
+                                        <button onclick="copyToClipboard(\`${command.example.replace(/`/g, '\\`')}\`)">Copy</button>
+                                    </p>
+                                    <pre><code>${command.example}</code></pre>
+                                    ${command.version ? `<p><strong>Version:</strong> ${command.version}</p>` : ''}
+                                `;
+                                container.appendChild(commandElement);
+                            });
+                        });
+                    });
+                });
+        });
+    </script>
+</body>

@@ -1,0 +1,252 @@
+{
+    "categories": [
+        {
+            "name": "Local Repository Management",
+            "subcategories": [
+                {
+                    "name": "Repository Setup & Configuration",
+                    "commands": [
+                        {
+                            "command": "git init",
+                            "syntax": "git init [directory]",
+                            "description": "Creates a new Git repository. If 'directory' is not provided, it initializes the current directory.",
+                            "why": "This is the foundational step to start versioning a project locally with Git, creating the necessary '.git' directory.",
+                            "when": "When starting a new project from scratch, or when you want to convert an unversioned project into a Git repository.",
+                            "example": "git init my-awesome-project",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git clone",
+                            "syntax": "git clone [url] [directory]",
+                            "description": "Clones a repository from a given URL into a new directory. If 'directory' is omitted, it creates one with the same name as the repository.",
+                            "why": "To get a local working copy of an existing remote repository, enabling you to contribute or simply examine its contents.",
+                            "when": "When you want to contribute to a remote project (e.g., from GitHub) or fetch a project to your local machine.",
+                            "example": "git clone https://github.com/octocat/Spoon-Knife.git",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git config",
+                            "syntax": "git config --global user.name \"Your Name\"",
+                            "description": "Sets a Git configuration value. `--global` applies to all your repositories, otherwise it's per-repository.",
+                            "why": "To customize your Git environment, such as setting your user name and email, which are included in your commits.",
+                            "when": "Typically configured once after Git installation (global) or when setting up a new repository (local).",
+                            "example": "git config --global user.email \"you@example.com\"",
+                            "version": "Git >= 1.5"
+                        }
+                    ]
+                },
+                {
+                    "name": "Checking Status & History",
+                    "commands": [
+                        {
+                            "command": "git status",
+                            "syntax": "git status",
+                            "description": "Shows the working tree status, including changes staged, unstaged, and untracked files.",
+                            "why": "To quickly see the current state of your repository and what changes are pending.",
+                            "when": "Frequently, to check what you've modified, what's ready to be committed, or if there are new files to track.",
+                            "example": "git status",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git log",
+                            "syntax": "git log [--oneline --graph --all]",
+                            "description": "Shows commit logs, displaying a history of all commits in the repository.",
+                            "why": "To review the project's history, understand changes over time, and identify specific commits.",
+                            "when": "When you need to find out who made a change, when it was made, or what changes were introduced in a commit.",
+                            "example": "git log --oneline --graph --all",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git diff",
+                            "syntax": "git diff [file] / git diff --staged",
+                            "description": "Shows changes between commits, commit and working tree, etc. `git diff` shows unstaged changes, `git diff --staged` shows staged changes.",
+                            "why": "To review exactly what modifications have been made to files before staging or committing them.",
+                            "when": "Before `git add` to review unstaged changes, or before `git commit` to review staged changes.",
+                            "example": "git diff my_file.py",
+                            "version": "Git >= 1.5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Making and Managing Changes",
+            "subcategories": [
+                {
+                    "name": "Staging & Committing",
+                    "commands": [
+                        {
+                            "command": "git add",
+                            "syntax": "git add [file] / git add .",
+                            "description": "Adds file contents to the index (staging area). `git add .` stages all changes.",
+                            "why": "To select which changes from your working directory you want to include in your next commit.",
+                            "when": "After modifying files and before committing, to prepare the snapshot of changes.",
+                            "example": "git add my_script.sh",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git rm",
+                            "syntax": "git rm [file]",
+                            "description": "Removes files from the working tree and from the index.",
+                            "why": "To stop tracking a file and remove it from the repository history for future commits.",
+                            "when": "When you want to delete a file that is currently tracked by Git.",
+                            "example": "git rm old_config.txt",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git commit",
+                            "syntax": "git commit -m \"[commit message]\"",
+                            "description": "Records changes to the repository, creating a new commit with the staged changes and a descriptive message.",
+                            "why": "To save a snapshot of your project at a specific point in time to the local repository history.",
+                            "when": "After you have staged all the changes you want to include for a logical unit of work.",
+                            "example": "git commit -m \"Implement user authentication feature\"",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git amend",
+                            "syntax": "git commit --amend",
+                            "description": "Combines staged changes with the previous commit, or allows you to edit the previous commit message.",
+                            "why": "To fix a mistake in the last commit, add forgotten files, or refine the commit message without creating a new commit.",
+                            "when": "Immediately after making a commit if you realize you forgot something or made a typo in the message, and before pushing to a shared remote.",
+                            "example": "git commit --amend -m \"Fix typo in authentication commit message\"",
+                            "version": "Git >= 1.6"
+                        }
+                    ]
+                },
+                {
+                    "name": "Undoing Changes",
+                    "commands": [
+                        {
+                            "command": "git restore",
+                            "syntax": "git restore [file] / git restore --staged [file]",
+                            "description": "Restores specified paths in the working tree to a state from the index or a commit. Use `--staged` to unstage a file.",
+                            "why": "To discard unstaged changes in a file or to unstage changes that were accidentally added.",
+                            "when": "When you want to revert a file to its last committed state (unstaged) or remove it from the staging area.",
+                            "example": "git restore broken_feature.js",
+                            "version": "Git >= 2.23"
+                        },
+                        {
+                            "command": "git reset",
+                            "syntax": "git reset [--soft|--mixed|--hard] [commit]",
+                            "description": "Resets the current HEAD to the specified state. `--soft` keeps changes staged, `--mixed` unstages, `--hard` discards.",
+                            "why": "To undo commits, rearrange history, or unstage changes.",
+                            "when": "When you need to revert multiple commits, clean up your local history, or unstage all current changes.",
+                            "example": "git reset --hard HEAD~1",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git revert",
+                            "syntax": "git revert [commit]",
+                            "description": "Creates a new commit that undoes the changes made in a previous commit.",
+                            "why": "To undo changes from a specific commit while preserving the project history, which is safe for shared repositories.",
+                            "when": "When you need to undo changes from a pushed commit without rewriting shared history.",
+                            "example": "git revert HEAD~2",
+                            "version": "Git >= 1.5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Branching, Merging & Remote Operations",
+            "subcategories": [
+                {
+                    "name": "Branches",
+                    "commands": [
+                        {
+                            "command": "git branch",
+                            "syntax": "git branch [branch_name] / git branch -d [branch_name]",
+                            "description": "Lists, creates, or deletes branches. Without arguments, lists local branches.",
+                            "why": "To create isolated lines of development, allowing work on different features or bug fixes concurrently.",
+                            "when": "When starting a new feature, fixing a bug, or experimenting with new ideas without affecting the main codebase.",
+                            "example": "git branch new-feature",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git checkout",
+                            "syntax": "git checkout [branch_name] / git checkout -b [new_branch]",
+                            "description": "Switches branches or restores working tree files. `checkout -b` creates and switches to a new branch.",
+                            "why": "To move between different lines of development or to create a new branch from your current position.",
+                            "when": "When you want to work on a different feature, switch to a bugfix branch, or return to a previous commit.",
+                            "example": "git checkout develop",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git switch",
+                            "syntax": "git switch [branch_name] / git switch -c [new_branch]",
+                            "description": "(Newer alternative to checkout) Switches branches. `switch -c` creates and switches to a new branch.",
+                            "why": "Provides a clearer separation of concerns between switching branches and restoring files compared to `git checkout`.",
+                            "when": "Prefer `git switch` for changing branches and `git restore` for reverting file changes.",
+                            "example": "git switch -c hotfix/bug-123",
+                            "version": "Git >= 2.23"
+                        }
+                    ]
+                },
+                {
+                    "name": "Merging",
+                    "commands": [
+                        {
+                            "command": "git merge",
+                            "syntax": "git merge [branch_to_merge_into_current]",
+                            "description": "Joins two or more development histories together.",
+                            "why": "To integrate changes from one branch into another, combining different lines of work.",
+                            "when": "After completing work on a feature branch, to integrate it into a `develop` or `main` branch.",
+                            "example": "git merge feature/new-login",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git rebase",
+                            "syntax": "git rebase [base_branch]",
+                            "description": "Reapplies commits on top of another base tip, often used to integrate changes from an upstream branch without merge commits.",
+                            "why": "To create a cleaner, linear project history by moving a feature branch's commits to the tip of another branch.",
+                            "when": "Before merging a feature branch into `main` or `develop`, to ensure a clean history without unnecessary merge commits.",
+                            "example": "git rebase main",
+                            "version": "Git >= 1.5"
+                        }
+                    ]
+                },
+                {
+                    "name": "Remotes",
+                    "commands": [
+                        {
+                            "command": "git remote",
+                            "syntax": "git remote -v / git remote add [name] [url]",
+                            "description": "Manages the set of tracked repositories (remotes). `-v` shows URLs, `add` adds a new remote.",
+                            "why": "To configure connections to remote versions of your repository, typically hosted on platforms like GitHub.",
+                            "when": "To see which remotes are configured, or to add a new remote repository to your local clone.",
+                            "example": "git remote add upstream https://github.com/original/repo.git",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git fetch",
+                            "syntax": "git fetch [remote]",
+                            "description": "Downloads objects and refs from another repository.",
+                            "why": "To retrieve new commits and branches from a remote repository without integrating them into your local working branch.",
+                            "when": "To see what changes have occurred on the remote before deciding to pull or merge.",
+                            "example": "git fetch origin",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git pull",
+                            "syntax": "git pull [remote] [branch]",
+                            "description": "Fetches from and integrates with another repository or a local branch.",
+                            "why": "To update your current local working branch with the latest changes from a remote branch.",
+                            "when": "Regularly, to synchronize your local repository with the remote, especially before starting new work.",
+                            "example": "git pull origin main",
+                            "version": "Git >= 1.5"
+                        },
+                        {
+                            "command": "git push",
+                            "syntax": "git push [remote] [branch]",
+                            "description": "Updates remote refs along with associated objects.",
+                            "why": "To upload your local commits to a remote repository, making them available to others.",
+                            "when": "After committing changes locally and wanting to share them with the team or update the central repository.",
+                            "example": "git push origin feature/my-new-feature",
+                            "version": "Git >= 1.5"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

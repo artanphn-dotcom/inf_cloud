@@ -1,0 +1,225 @@
+{
+    "categories": [
+        {
+            "name": "VPC Networking",
+            "subcategories": [
+                {
+                    "name": "Basics",
+                    "commands": [
+                        {
+                            "command": "gcloud compute networks list",
+                            "syntax": "gcloud compute networks list [--project=PROJECT_ID]",
+                            "description": "Lists all the VPC networks in a specified project. By default, it lists networks in the current project.",
+                            "why": "Provides a quick overview of all existing networks, which is essential for network management and auditing.",
+                            "when": "Use this command when you need to identify a network's name, verify its existence, or get a high-level view of your network topology.",
+                            "example": "gcloud compute networks list",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute networks describe",
+                            "syntax": "gcloud compute networks describe [NETWORK_NAME] [--project=PROJECT_ID]",
+                            "description": "Displays detailed information about a specific VPC network, including its subnets, firewall rules, and routing configuration.",
+                            "why": "Crucial for troubleshooting network issues, verifying configurations, and understanding the detailed setup of a network.",
+                            "when": "When you are diagnosing a connectivity problem, auditing a network's settings, or preparing for a network modification.",
+                            "example": "gcloud compute networks describe my-custom-vpc",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute networks create",
+                            "syntax": "gcloud compute networks create [NETWORK_NAME] --subnet-mode=[CUSTOM | AUTO] [--bgp-routing-mode=[REGIONAL | GLOBAL]]",
+                            "description": "Creates a new VPC network. Custom mode is recommended for production environments for better control.",
+                            "why": "To establish a new isolated network segment within your GCP project.",
+                            "when": "When deploying a new application or environment that requires its own network infrastructure.",
+                            "example": "gcloud compute networks create production-vpc --subnet-mode=custom --bgp-routing-mode=global",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute networks subnets create",
+                            "syntax": "gcloud compute networks subnets create [SUBNET_NAME] --network=[NETWORK_NAME] --range=[CIDR_RANGE] --region=[REGION]",
+                            "description": "Creates a new subnetwork within a specified VPC network.",
+                            "why": "Subnets allow you to segment your VPC network into smaller, manageable IP ranges, facilitating organization and access control.",
+                            "when": "After creating a custom VPC, you need to define subnetworks where your resources will reside.",
+                            "example": "gcloud compute networks subnets create web-subnet --network=production-vpc --range=10.0.0.0/24 --region=us-central1",
+                            "version": "gcloud >= 300.0.0"
+                        }
+                    ]
+                },
+                {
+                    "name": "Firewall Rules",
+                    "commands": [
+                        {
+                            "command": "gcloud compute firewall-rules create",
+                            "syntax": "gcloud compute firewall-rules create [RULE_NAME] --network=[NETWORK_NAME] --allow=[PROTOCOL]:[PORT] --source-ranges=[IP_RANGES] [--target-tags=[TAGS]]",
+                            "description": "Creates a new firewall rule to allow or deny traffic based on protocol, port, source/destination, and tags.",
+                            "why": "Essential for network security, controlling ingress and egress traffic to/from your VM instances and other network resources.",
+                            "when": "When you need to open specific ports for services (e.g., SSH, HTTP, HTTPS) or restrict communication between different network segments.",
+                            "example": "gcloud compute firewall-rules create allow-http --network=production-vpc --allow=tcp:80 --source-ranges=0.0.0.0/0 --target-tags=web-server",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute firewall-rules update",
+                            "syntax": "gcloud compute firewall-rules update [RULE_NAME] [--allow=[PROTOCOL]:[PORT]] [--source-ranges=[IP_RANGES]]",
+                            "description": "Modifies an existing firewall rule.",
+                            "why": "To adjust security policies without recreating the entire rule, ensuring continuous service.",
+                            "when": "When you need to change allowed ports, update source IP ranges, or modify target tags for an active service.",
+                            "example": "gcloud compute firewall-rules update allow-http --allow=tcp:80,tcp:443",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute firewall-rules delete",
+                            "syntax": "gcloud compute firewall-rules delete [RULE_NAME]",
+                            "description": "Deletes a firewall rule.",
+                            "why": "To remove obsolete or insecure firewall rules, improving security posture and simplifying network management.",
+                            "when": "When a service is decommissioned, or a new, more comprehensive rule replaces an older one.",
+                            "example": "gcloud compute firewall-rules delete allow-http",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute firewall-rules list",
+                            "syntax": "gcloud compute firewall-rules list [--network=[NETWORK_NAME]]",
+                            "description": "Lists all firewall rules, optionally filtered by network.",
+                            "why": "To review existing firewall policies, identify potential overlaps, or ensure compliance.",
+                            "when": "Regularly for security audits or when troubleshooting network access issues.",
+                            "example": "gcloud compute firewall-rules list --network=production-vpc",
+                            "version": "gcloud >= 300.0.0"
+                        }
+                    ]
+                },
+                {
+                    "name": "Shared VPC",
+                    "commands": [
+                        {
+                            "command": "gcloud compute shared-vpc enable",
+                            "syntax": "gcloud compute shared-vpc enable [HOST_PROJECT_ID]",
+                            "description": "Enables Shared VPC on a host project, allowing service projects to use its networks.",
+                            "why": "To centralize network management and apply consistent network policies across multiple projects.",
+                            "when": "When you have multiple service projects that need to share a common, centrally managed network infrastructure.",
+                            "example": "gcloud compute shared-vpc enable host-project-123",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute shared-vpc associated-projects add",
+                            "syntax": "gcloud compute shared-vpc associated-projects add [SERVICE_PROJECT_ID] --host-project=[HOST_PROJECT_ID]",
+                            "description": "Associates a service project with a Shared VPC host project.",
+                            "why": "Allows resources in the service project to utilize the subnets and network resources of the host project.",
+                            "when": "After enabling Shared VPC on the host project, you onboard service projects to leverage the shared network.",
+                            "example": "gcloud compute shared-vpc associated-projects add service-project-456 --host-project=host-project-123",
+                            "version": "gcloud >= 300.0.0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Hybrid Connectivity",
+            "subcategories": [
+                {
+                    "name": "HA VPN",
+                    "commands": [
+                        {
+                            "command": "gcloud compute external-vpn-gateways create",
+                            "syntax": "gcloud compute external-vpn-gateways create [GATEWAY_NAME] --interfaces=0=[EXTERNAL_IP_0],1=[EXTERNAL_IP_1]",
+                            "description": "Creates an external VPN gateway resource to represent your on-premises VPN device.",
+                            "why": "The first step in setting up HA VPN, defining the external endpoints for your VPN tunnels.",
+                            "when": "Before creating VPN tunnels for HA VPN, you need to configure the external VPN gateway that points to your on-premises device.",
+                            "example": "gcloud compute external-vpn-gateways create onprem-vpn-gw --interfaces=0=203.0.113.1,1=203.0.113.2",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute vpn-gateways create",
+                            "syntax": "gcloud compute vpn-gateways create [VPN_GATEWAY_NAME] --network=[NETWORK_NAME] --region=[REGION]",
+                            "description": "Creates a regional HA VPN gateway in your Google Cloud VPC.",
+                            "why": "Provides two interfaces for high-availability VPN connectivity to your on-premises network.",
+                            "when": "As part of HA VPN setup, this gateway pairs with your external VPN gateway to establish redundant tunnels.",
+                            "example": "gcloud compute vpn-gateways create gcp-ha-vpn-gw --network=production-vpc --region=us-central1",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute vpn-tunnels create",
+                            "syntax": "gcloud compute vpn-tunnels create [TUNNEL_NAME] --peer-external-gateway=[EXTERNAL_GW_NAME] --peer-external-gateway-interface=[INTERFACE_NUM] --vpn-gateway=[VPN_GW_NAME] --interface=[VPN_GW_INTERFACE_NUM] --shared-secret=[SECRET] --ike-version=2 --router=[CLOUD_ROUTER_NAME]",
+                            "description": "Creates a VPN tunnel, connecting an HA VPN gateway interface to an external VPN gateway interface, and associating it with a Cloud Router.",
+                            "why": "Establishes secure, encrypted communication paths. For HA, two tunnels are created to achieve redundancy.",
+                            "when": "After setting up external and HA VPN gateways, you create the individual tunnels, linking them to a Cloud Router for dynamic routing.",
+                            "example": "gcloud compute vpn-tunnels create tunnel-0 --peer-external-gateway=onprem-vpn-gw --peer-external-gateway-interface=0 --vpn-gateway=gcp-ha-vpn-gw --interface=0 --shared-secret=mysecret --ike-version=2 --router=my-cloud-router",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute vpn-tunnels describe",
+                            "syntax": "gcloud compute vpn-tunnels describe [TUNNEL_NAME] --region=[REGION]",
+                            "description": "Displays detailed configuration and status information for a VPN tunnel.",
+                            "why": "To verify tunnel configuration, check its status, and troubleshoot connectivity issues.",
+                            "when": "After creating tunnels, or when investigating why VPN traffic is not flowing as expected.",
+                            "example": "gcloud compute vpn-tunnels describe tunnel-0 --region=us-central1",
+                            "version": "gcloud >= 300.0.0"
+                        }
+                    ]
+                },
+                {
+                    "name": "Cloud Router",
+                    "commands": [
+                        {
+                            "command": "gcloud compute routers create",
+                            "syntax": "gcloud compute routers create [ROUTER_NAME] --network=[NETWORK_NAME] --region=[REGION] --asn=[BGP_ASN]",
+                            "description": "Creates a Cloud Router instance in a specified region and network, used for BGP peering with on-premises routers.",
+                            "why": "Enables dynamic routing for VPN and Cloud Interconnect connections, automatically exchanging routes without manual static route configuration.",
+                            "when": "When setting up any hybrid connectivity solution (HA VPN, Cloud Interconnect) that requires dynamic route exchange.",
+                            "example": "gcloud compute routers create my-cloud-router --network=production-vpc --region=us-central1 --asn=65001",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute routers add-interface",
+                            "syntax": "gcloud compute routers add-interface [ROUTER_NAME] --interface-name=[INTERFACE_NAME] --ip-address=[IP_ADDRESS] --vpn-tunnel=[VPN_TUNNEL_NAME] --region=[REGION]",
+                            "description": "Adds an interface to a Cloud Router, typically linking it to a VPN tunnel.",
+                            "why": "Interfaces are necessary for the Cloud Router to establish BGP sessions over the VPN tunnels.",
+                            "when": "After creating VPN tunnels, you add an interface on the Cloud Router for each tunnel to enable BGP peering.",
+                            "example": "gcloud compute routers add-interface my-cloud-router --interface-name=cr-int-0 --ip-address=169.254.1.1/30 --vpn-tunnel=tunnel-0 --region=us-central1",
+                            "version": "gcloud >= 300.0.0"
+                        },
+                        {
+                            "command": "gcloud compute routers add-bgp-peer",
+                            "syntax": "gcloud compute routers add-bgp-peer [ROUTER_NAME] --peer-name=[PEER_NAME] --interface=[INTERFACE_NAME] --peer-asn=[PEER_ASN] --peer-ip-address=[PEER_IP_ADDRESS] --region=[REGION]",
+                            "description": "Adds a BGP peer to a Cloud Router interface.",
+                            "why": "Establishes a BGP session between the Cloud Router and your on-premises router, allowing dynamic route exchange.",
+                            "when": "After configuring Cloud Router interfaces, you define the BGP peer settings to complete the dynamic routing setup.",
+                            "example": "gcloud compute routers add-bgp-peer my-cloud-router --peer-name=onprem-bgp --interface=cr-int-0 --peer-asn=65002 --peer-ip-address=169.254.1.2/30 --region=us-central1",
+                            "version": "gcloud >= 300.0.0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Private Service Connect (PSC)",
+            "subcategories": [
+                {
+                    "name": "Service Producers (Publishing Services)",
+                    "commands": [
+                        {
+                            "command": "gcloud compute service-attachments create",
+                            "syntax": "gcloud compute service-attachments create [ATTACHMENT_NAME] --region=[REGION] --producer-forwarding-rule=[FWD_RULE_NAME] --connection-preference=[ACCEPT_AUTOMATIC | ACCEPT_MANUAL]",
+                            "description": "Creates a Private Service Connect service attachment, allowing consumers to connect to your service privately.",
+                            "why": "Enables you to offer services privately to consumers in other VPC networks, enhancing security and simplifying network architecture.",
+                            "when": "When you want to expose a service (e.g., a managed instance group load balancer) to other GCP projects or VPCs without exposing it to the internet.",
+                            "example": "gcloud compute service-attachments create my-sa --region=us-central1 --producer-forwarding-rule=my-fwd-rule --connection-preference=ACCEPT_AUTOMATIC",
+                            "version": "gcloud >= 340.0.0"
+                        }
+                    ]
+                },
+                {
+                    "name": "Service Consumers (Connecting to Services)",
+                    "commands": [
+                        {
+                            "command": "gcloud compute forwarding-rules create",
+                            "syntax": "gcloud compute forwarding-rules create [FWD_RULE_NAME] --network=[NETWORK_NAME] --region=[REGION] --target-service-attachment=[SERVICE_ATTACHMENT_URL]",
+                            "description": "Creates a forwarding rule in a consumer project to connect to a PSC service attachment.",
+                            "why": "Allows instances in your VPC network to access a producer's service through a private IP address, eliminating the need for public IPs or VPNs.",
+                            "when": "When you need to consume a service that is exposed via Private Service Connect.",
+                            "example": "gcloud compute forwarding-rules create my-psc-fwd-rule --network=consumer-vpc --region=us-central1 --target-service-attachment=projects/producer-project/regions/us-central1/serviceAttachments/my-sa",
+                            "version": "gcloud >= 340.0.0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
