@@ -234,10 +234,13 @@ body.dark-mode .command {
 body.dark-mode pre {
     background-color: #1a1a1a;
     border-color: #333;
+<<<<<<< HEAD
 }
 
 body.dark-mode .command p {
     color: #a0a0a0;
+=======
+>>>>>>> parent of 1bdb51e ( test 3)
 }
 
 body.dark-mode .command p strong + button {
