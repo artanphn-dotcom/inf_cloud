@@ -11,9 +11,16 @@
     </header>
 
     <main>
-        <a href="index.html">Back to Home</a>
-        <h1>GCP Networking Commands</h1>
-        <div id="command-container"></div>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Google Cloud Platform (Networking)</h1>
+                <p>In-depth commands and configurations for GCP networking, including VPC, VPN, Cloud Router, and Private Service Connect.</p>
+            </div>
+        </section>
+
+        <section class="command-section">
+            <div id="command-container"></div>
+        </section>
     </main>
 
     <footer>
@@ -67,8 +74,7 @@
                                         )">Copy</button>
                                     </p>
                                     <pre><code>${command.example}</code></pre>
-                                    
-                                    
+                                    ${command.version ? `<p><strong>Version:</strong> ${command.version}</p>` : ''}
                                 
 								`;
                                 container.appendChild(commandElement);

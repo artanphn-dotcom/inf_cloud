@@ -11,9 +11,16 @@
     </header>
 
     <main>
-        <a href="index.html">Back to Home</a>
-        <h1>GitHub Commands</h1>
-        <div id="command-container"></div>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>GitHub</h1>
+                <p>Essential Git commands and workflows for effective version control, from local repository management to remote collaboration.</p>
+            </div>
+        </section>
+
+        <section class="command-section">
+            <div id="command-container"></div>
+        </section>
     </main>
 
     <footer>
@@ -64,8 +71,7 @@
                                     </p>
                                     <pre><code>${command.example}</code></pre>
                                     ${command.version ? `<p><strong>Version:</strong> ${command.version}</p>` : ''}
-                                
-`;
+                                `;
                                 container.appendChild(commandElement);
                             });
                         });
